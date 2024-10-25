@@ -291,7 +291,7 @@ impl Emu {
                         if (pixels & (0b1000_0000 >> x_line)) != 0 {
                             // Sprites should wrap around screen, so apply modulo
                             let x = (x_coord + x_line) as usize % SCREEN_WIDTH;
-                            let y = (y_coord + x_line) as usize % SCREEN_HEIGHT;
+                            let y = (y_coord + y_line) as usize % SCREEN_HEIGHT;
 
                             // Get our pixel's index for our 1D screen array
                             let idx = x + SCREEN_WIDTH * y;
@@ -429,5 +429,19 @@ impl Emu {
             }
             self.st -= 1;
         }
+    }
+
+    pub fn get_display(&self) -> &[bool] {
+        &self.screen
+    }
+
+    pub fn keypress(&mut self, idx: usize, pressed: bool) {
+        self.keys[idx] = pressed;
+    }
+
+    pub fn load(&mut self, data: &[u8]) {
+        let start = START_ADDR as usize;
+        let end = (START_ADDR as usize) + data.len();
+        self.ram[start..end].copy_from_slice(data);
     }
 }
