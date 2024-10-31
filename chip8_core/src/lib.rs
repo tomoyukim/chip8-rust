@@ -424,15 +424,16 @@ impl Emu {
         }
 
         if self.st > 0 {
-            if self.st == 1 {
-                // TODO: BEEP
-            }
             self.st -= 1;
         }
     }
 
     pub fn get_display(&self) -> &[bool] {
         &self.screen
+    }
+
+    pub fn get_st(&self) -> &u8 {
+        &self.st
     }
 
     pub fn keypress(&mut self, idx: usize, pressed: bool) {
