@@ -163,10 +163,10 @@ fn main() {
             }
 
             chip8.tick();
+            play_audio(&chip8, &mut audio_queue);
         }
 
         chip8.tick_timers();
-        play_audio(&chip8, &mut audio_queue);
         draw_screen(&chip8, &mut canvas);
 
         if let Some(remaining) = frame.checked_sub(now.elapsed()) {
